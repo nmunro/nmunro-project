@@ -2,12 +2,12 @@
   :version "{{project-version}}"
   :author "{{project-author}}"
   :license "{{project-license}}"
-  :depends-on ("prove")
+  :depends-on ("rove")
   :components ((:module "src"
                 :components
                 ((:file "main"))))
   :description "Generate a skeleton for modern project"
-  :in-order-to ((test-op (test-op "{{project-name}}-tests"))))
+  :in-order-to ((test-op (test-op "{{project-name}}/tests"))))
 
 (defsystem "{{project-name}}/tests"
   :author "{{project-author}}"
