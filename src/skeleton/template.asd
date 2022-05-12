@@ -2,7 +2,7 @@
   :version "{{project-version}}"
   :author "{{project-author}}"
   :license "{{project-license}}"
-  :depends-on ("rove")
+  :depends-on ()
   :components ((:module "src"
                 :components
                 ((:file "main"))))
@@ -13,7 +13,7 @@
   :author "{{project-author}}"
   :license "{{project-license}}"
   :depends-on ("{{project-name}}"
-               "rove")
+               :rove)
   :components ((:module "tests"
                 :components
                 ((:file "main"))))
