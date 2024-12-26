@@ -1,9 +1,9 @@
 (defsystem "nmunro-project"
-  :version "0.0.1"
+  :version "1.0.0"
   :author "NMunro"
   :license "BSD-3-Clause"
-  :depends-on ("djula"
-               "prove")
+  :depends-on (:djula
+               :rove)
   :components ((:module "src"
                 :components
                 ((:file "nmunro-project"))))

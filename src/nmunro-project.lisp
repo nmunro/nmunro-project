@@ -5,11 +5,12 @@
 (in-package nmunro-project)
 
 (defclass project ()
-  ((name    :initarg :name    :initform (error "Must provide a name")    :reader name)
-   (path    :initarg :path    :initform (error "Must provide a path")    :reader path)
-   (author  :initarg :author  :initform (error "Must provide a author")  :reader author)
-   (version :initarg :version :initform (error "Must provide a version") :reader version)
-   (license :initarg :license :initform (error "Must provide a license") :reader license))
+  ((name        :initarg :name        :initform (error "Must provide a name")        :reader name)
+   (path        :initarg :path        :initform (error "Must provide a path")        :reader path)
+   (author      :initarg :author      :initform (error "Must provide a author")      :reader author)
+   (version     :initarg :version     :initform (error "Must provide a version")     :reader version)
+   (license     :initarg :license     :initform (error "Must provide a license")     :reader license)
+   (description :initarg :description :initform (error "Must provide a description") :reader description))
   (:documentation "A project object"))
 
 (defmethod print-object ((object project) stream)
@@ -55,12 +56,13 @@
         (out-name (merge-pathnames (or name template) path)))
     (with-open-file (out out-name :direction :output :if-does-not-exist :create)
        (apply #'djula:render-template* (append `(,template ,out)
-                                               `(:project-name    ,(name project)
-                                                 :project-author  ,(author project)
-                                                 :project-version ,(version project)
-                                                 :project-license ,(license project)))))))
+                                               `(:project-name        ,(name project)
+                                                 :project-author      ,(author project)
+                                                 :project-version     ,(version project)
+                                                 :project-license     ,(license project)
+                                                 :project-description ,(description project)))))))
 
-(defun make-project (path &key (author (uiop:getenv "USER")) (license "BSD3-Clause") (version "0.0.1") (assume-home-dir t))
+(defun make-project (path &key (author (uiop:getenv "USER")) (license "BSD3-Clause") (version "0.0.1") (description "") (assume-home-dir t))
   (djula:add-template-directory (asdf:system-relative-pathname "nmunro-project" "src/skeleton/"))
 
   (flet ((determine-path-type (path)
@@ -75,13 +77,13 @@
            (name (car (last (pathname-directory path)))))
       (cond
         (assume-home-dir
-         (let ((project (make-instance 'project :name name :path (merge-pathnames path (user-homedir-pathname)) :author author :license license :version version)))
+         (let ((project (make-instance 'project :name name :path (merge-pathnames path (user-homedir-pathname)) :author author :license license :version version :description description)))
            (create-project project)))
 
         ((and (not assume-home-dir) (eq :relative (determine-path-type path)))
-         (let ((project (make-instance 'project :name name :path (merge-pathnames path (uiop:getcwd)) :author author :license license :version version)))
+         (let ((project (make-instance 'project :name name :path (merge-pathnames path (uiop:getcwd)) :author author :license license :version version :description description)))
            (create-project project)))
 
         ((and (not assume-home-dir) (eq :absolute (determine-path-type path)))
-         (let ((project (make-instance 'project :name name :path path :author author :license license :version version)))
+         (let ((project (make-instance 'project :name name :path path :author author :license license :version version :description description)))
            (create-project project)))))))
