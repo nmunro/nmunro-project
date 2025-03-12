@@ -16,5 +16,5 @@ exec ros -Q -L sbcl-bin -- $0 "$@"
 
 (in-package #:ros/script/nmunro-project)
 
-(defun main (path &key (author (uiop:getenv "USER")) (license "BSD3-Clause") (version "0.0.1") (description "") (assume-home-dir t))
-  (apply #'make-project `(,path :author ,author :license ,license :version ,version :description ,description :assume-home-dir ,assume-home-dir))
+(defun main (path &optional (author (uiop:getenv "USER")) (license "BSD3-Clause") (version "0.0.1") (description "") (assume-home-dir t))
+  (apply #'make-project `(,path :author ,author :license ,license :version ,version :description ,description :assume-home-dir ,assume-home-dir)))
