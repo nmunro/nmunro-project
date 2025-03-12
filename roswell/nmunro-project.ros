@@ -1,0 +1,20 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -L sbcl-bin -- $0 "$@"
+|#
+
+(progn ;;init forms
+  (ros:ensure-asdf)
+  (let ((*standard-output* (make-broadcast-stream))
+        (*trace-output* (make-broadcast-stream)))
+    (funcall (intern (string '#:load-system) '#:asdf) '#:qlot/cli)))
+
+(defpackage #:ros/script/nmunro-project
+  (:use #:cl)
+  (:import-from #:nmunro-project #:make-project))
+
+(in-package #:ros/script/nmunro-project)
+
+(defun main (path &key (author (uiop:getenv "USER")) (license "BSD3-Clause") (version "0.0.1") (description "") (assume-home-dir t))
+  (apply #'make-project `(,path :author ,author :license ,license :version ,version :description ,description :assume-home-dir ,assume-home-dir))
