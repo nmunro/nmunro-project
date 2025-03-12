@@ -8,7 +8,7 @@ exec ros -Q -L sbcl-bin -- $0 "$@"
   (ros:ensure-asdf)
   (let ((*standard-output* (make-broadcast-stream))
         (*trace-output* (make-broadcast-stream)))
-    (funcall (intern (string '#:load-system) '#:asdf) '#:qlot/cli)))
+    (funcall (intern (string '#:load-system) '#:asdf) '#:nmunro-project)))
 
 (defpackage #:ros/script/nmunro-project
   (:use #:cl)
